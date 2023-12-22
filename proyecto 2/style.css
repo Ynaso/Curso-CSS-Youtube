@@ -1,0 +1,106 @@
+body{
+    font-family: sans-serif;
+    background-color: gray;
+}
+
+.imagenes-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+}
+
+/*aca lo que hacemos es acercar mas las imagenes usando el margin right*/
+/*tambien desplegamos el tipo de layout como inline-flex de forma que se adapte a la pantalla al moverse de tipo flex box*/
+.imagenes-container .imagen {
+    position: relative;
+    margin-right: -20px;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+/*aca lo que hacemos es agregar estilos directamente a  la imagen*/
+
+.imagenes-container .imagen img{
+    width: 150px;
+    height: 150px;
+    /*aca hacemos referencia a la animacion que le dimos abajo, que es transform y luego agregamos que clase de retraso deseamos que tenga ;)*/
+    transition: transform 0.3s ease-in-out;
+}
+
+
+/*aca en esta parte, estilizamos el span, usando la position absolute, hacemos que el span busque la posicion absoluta a su nodo padre mas cercano de manera que se nos haga mas facil el posicionar dichos nombres, ya que aca es a donde le damos el nombre al pokemon*/
+
+
+/*aca estilizamos el texto en los nombres, de forma que podamos controlar cuando haya un desbordamiento en el texto */
+.imagenes-container .imagen .nombre .text{
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 auto;
+    width: 150px;
+    text-align: center;
+    box-sizing: border-box;
+
+}
+.imagenes-container .imagen .nombre{
+    position: absolute;
+    background-color: black;
+    border-radius:  5px;
+    color: white;
+    /*aca ocultamos la cajita de texto para posteriormente mostrarla al usar la subclase Hover*/
+    display: none;
+    min-width: 100px;
+    width: 150px;
+    /*usando el top en negativo, despues de haber ubicado el span en posicion absoluta, lo que hacemos es que en vez de empujar desde arriba hacia abajo, empujamos hacia arriba, usando valores negativos*/
+    top: -75px;
+   
+    padding: 10px 15px;
+
+}
+
+
+
+/*aca hacemos que la cajita se muestre en linea, la caja del nombre,al hacer hover, recordemos que arriba ocultamos dicha caja, pues aca la estamos mostrando */
+.imagenes-container .imagen:hover .nombre{
+    display: inline-block;
+}
+
+
+/*aca dibujamos una flecha bajo el nombre apunta de border slices*/
+.imagenes-container .imagen .nombre::before{
+    content: "";
+    /*hacemos que la posicion sea absoluta de forma que podamos posicionar dicha flecha hacia abajo, de acuerdo a la posicion de la clase imagen y asi sea mas sencillo de posicionar con respecto a este nodo hacia abajito*/
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    /*movemos desde la izquiera a un 40% de su posicion para centrar la flecha*/
+    left: 40%;
+
+    /*en vez de usar el top, esta vez lo que hacemos es empujar desde abajo hacia arriba con la propiedad bottom, para poder usarla, siempre tenemos que establecer una posicion a fuerza*/
+    bottom: -20px;
+
+    /*aca dibujamos nuestro precioso triangulo, primero crreamos el border de arriba, con 10px para que sea gruesp*/
+    border-top: 10px solid black;
+    /*y luego agregamos los borders de los lados de tal manera que podamos eliminarlos y asi nada mas mostrar el borde superior*/
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.imagenes-container .imagen:hover img{
+
+    /*aca al hacer hover, aplicamos una animacion, que es la animacion a la que hicimos referencia arriba en la clase superior */
+    transform: translateY(-20px);
+}
+
+
+/*este media query ayuda a que podamos cambiar el comportamiento de las cajas flexible a columnas, y las podamos centrar de forma que al hacer hover sobre ella, se muestren en forma vertical*/
+@media (max-width: 680px){
+    .imagenes-container{
+        flex-direction: column;
+        height: 180vh;
+    }
+}
